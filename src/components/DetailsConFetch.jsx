@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import parse from 'html-react-parser';
+import axios from "axios"
 
 //aqui obtengo los detalles y los guardo en un estado local
 
@@ -20,7 +21,8 @@ const Detail = () => {
   });
 
   useEffect(() => {   
-    fetch(`http://localhost:3001/videogames/${id}`)
+    //fetch(`http://localhost:3001/videogames/${id}`)
+    axios(`/videogames/${id}`)
       .then((response) => response.json())
       .then((data) => {       
         if (data) {
