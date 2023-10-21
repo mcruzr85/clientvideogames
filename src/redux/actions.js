@@ -50,10 +50,7 @@ export const addVideogame = (obj) => async (dispatch) => {
     ) {
       throw new Error("Incomplete data");
     } else {
-      const response = await axios.post(
-        "http://localhost:3001/videogames",
-        obj
-      );
+      const response = await axios.post("/videogames", obj);
       const data = await response.data;
       console.log("aqui mismo luego del axios la data es");
       addVgGenres(data.videogame); //agregando videogame.genres
@@ -79,11 +76,9 @@ export const getAllVideogames = (con, name) => async (dispatch) => {
 
     let response = "";
     if (name) {
-      response = await axios.get(
-        `http://localhost:3001/videogames?name=${name}`
-      );
+      response = await axios.get(`/videogames?name=${name}`);
     } else {
-      response = await axios.get(`http://localhost:3001/videogames?con=${con}`);
+      response = await axios.get(`/videogames?con=${con}`);
     }
 
     const data = await response.data;
@@ -119,11 +114,11 @@ export const getGenres = (source) => async (dispatch) => {
     if (source === "db") {
       //console.log(`el valor de source es ${source}`);
       //response = await fetch("/genresdb");
-      response = await axios.get(`http://localhost:3001/genresdb`);
+      response = await axios.get(`/genresdb`);
     } else if (source === "api") {
       // console.log(`el valor de source es ${source}`);
       //response = await fetch("/genres");
-      response = await axios.get("http://localhost:3001/genres");
+      response = await axios.get("/genres");
     }
     const data = response.data;
     // console.log("desde action getGenres imprimo la data y se a paso al payload");
@@ -139,9 +134,7 @@ export const getGenres = (source) => async (dispatch) => {
 
 export const getDetails = (id, creado) => async (dispatch) => {
   try {
-    const response = await axios.get(
-      `http://localhost:3001/videogames/${id}?creado=${creado}`
-    );
+    const response = await axios.get(`/videogames/${id}?creado=${creado}`);
     const data = response.data;
     console.log(`desde la action getDetails imprimo lo que llega del server`);
     console.log(data);
