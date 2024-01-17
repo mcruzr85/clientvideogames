@@ -8,7 +8,7 @@ import axios from "axios";
 async function getGenresOk() {
   try {
     // let response = await fetch("http://localhost:3001/genresdb");
-    let response = await axios("http://localhost:3001/genresdb");
+    let response = await axios("/genresdb");
     const data = response.data;
     console.log("el valor de data.genres.length en getGenresOk es");
     console.log(data.genres.length);
