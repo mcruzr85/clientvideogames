@@ -13,9 +13,9 @@ dotenv.config();
 
 //el Provider le permite a toda la App conocer sobre la existencia del store
 
-axios.defaults.baseURL = process.env.REACT_APP_API || "http://localhost:3001";
+//axios.defaults.baseURL = process.env.REACT_APP_API || "http://localhost:3001";
 //axios.defaults.baseURL = "http://localhost:3001";
-
+axios.defaults.baseURL = process.env.REACT_APP_API;
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
