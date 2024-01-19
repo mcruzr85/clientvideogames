@@ -43,9 +43,6 @@ export default function reducer(state = initialState, { type, payload }) {
      
 
     case GET_DETAILS:
-      console.log(
-        `se ejecuto en reducer en get details, payload es ${payload}`
-      );
       return {
         ...state,
         videogameDetails: payload,

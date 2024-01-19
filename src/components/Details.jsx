@@ -73,7 +73,6 @@ const Details = () => {
         <DetailContainer>
           <CardDetail>
             <div>
-              <Letter>{`Id: ${details.id}`}</Letter>
               <Letter> {details.name}</Letter>
 
               <Letter>{`Rating: ${details.rating}`}</Letter>

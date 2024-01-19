@@ -11,7 +11,8 @@ export const ORDER = "ORDER";
 export const RESET_SEARCH = "RESET_SEARCH";
 export const GET_VIDEOGAMES_NAME = "GET_VIDEOGAMES_NAME";
 
-function addArrayGenres(array) {
+/*function addArrayGenres(array) {
+  //para convertir el array de Genres a genres: "Action-Indie" una string
   let final = [];
   for (let i = 0; i < array.length; i++) {
     if (array[i].Genres) {
@@ -20,7 +21,7 @@ function addArrayGenres(array) {
     final.push(array[i]);
   }
   return final;
-}
+}*/
 
 //para agregar los generos cuando creo un nuevo videogame en la bd
 function addVgGenres(vg) {
@@ -69,11 +70,6 @@ export const addVideogame = (obj) => async (dispatch) => {
 
 export const getAllVideogames = (con, name) => async (dispatch) => {
   try {
-    console.log(
-      `desde la action getAllVideogames llego con name valor ${name}`
-    );
-    console.log(`desde la action getAllVideogames llego con  valor ${con}`);
-
     let response = "";
     if (name) {
       response = await axios.get(`/videogames?name=${name}`);
@@ -82,8 +78,7 @@ export const getAllVideogames = (con, name) => async (dispatch) => {
     }
 
     const data = await response.data;
-
-    let dataGenres = addArrayGenres(data.videogames);
+    //let dataGenres = addArrayGenres(data.videogames);
 
     if (data.Message) {
       alert("No results");
@@ -93,14 +88,16 @@ export const getAllVideogames = (con, name) => async (dispatch) => {
       //estoy buscando sin name
       return dispatch({
         type: GET_VIDEOGAMES,
-        payload: dataGenres,
+        payload: data.videogames,
+        // payload: dataGenres,
       });
     }
 
     if (name) {
       return dispatch({
         type: GET_VIDEOGAMES_NAME,
-        payload: dataGenres,
+        payload: data.videogames,
+        // payload: dataGenres,
       });
     }
   } catch (error) {
@@ -108,24 +105,18 @@ export const getAllVideogames = (con, name) => async (dispatch) => {
   }
 };
 
-export const getGenres = (source) => async (dispatch) => {
+export const getGenres = () => async (dispatch) => {
   try {
-    let response;
-    if (source === "db") {
-      //console.log(`el valor de source es ${source}`);
-      //response = await fetch("/genresdb");
-      response = await axios.get(`/genresdb`);
-    } else if (source === "api") {
-      // console.log(`el valor de source es ${source}`);
-      //response = await fetch("/genres");
-      response = await axios.get("/genres");
-    }
+    let response = await axios.get("/genres");
+
     const data = response.data;
-    // console.log("desde action getGenres imprimo la data y se a paso al payload");
-    // console.log(data);
+    console.log(
+      "19/01-desde action getGenres imprimo la data y se a paso al payload"
+    );
+    console.log(data);
     return dispatch({
       type: GET_GENRES,
-      payload: data.genres,
+      payload: data.genresArray,
     });
   } catch (error) {
     console.log(error.message);

@@ -3,47 +3,22 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as actions from "../redux/actions";
 import { FilterDiv } from "../styled";
-import axios from "axios";
-
-async function getGenresOk() {
-  try {
-    // let response = await fetch("http://localhost:3001/genresdb");
-    let response = await axios("/genresdb");
-    const data = response.data;
-    console.log("el valor de data.genres.length en getGenresOk es");
-    console.log(data.genres.length);
-    if (data.genres.length !== 0) {
-      return true;
-    } else return false;
-  } catch (error) {
-    console.log(error.message);
-  }
-}
 
 const Filter = () => {
+  let genres = useSelector((state) => state.genres);
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    const connection = async () => {
-      // console.log("ejecutando efect1 get genres desde bd");
-
-      const aux = await getGenresOk();
-      console.log("el valor de aux es ");
-      console.log(aux);
-      if (aux) {
-        //si es true, tengo los generos ya en la bd
-        await dispatch(actions.getGenres("db")); //aqui pongo el en state lo que hay en la bd
-      } else {
-        await dispatch(actions.getGenres("api")); //obtengo los genres de la api y los guardo en la bg
-      }
-    };
-    connection();
-  }, [dispatch]);
 
   const [visible, setVisible] = useState(false);
   const [selectValue, setSelectValue] = useState("");
 
-  const genres = useSelector((state) => state.genres);
+  useEffect(() => {
+    //if (genres.length === 0) {
+
+    const serverConection = async () => {
+      await dispatch(actions.getGenres());
+    };
+    serverConection();
+  }, [dispatch]);
 
   function handleFilters(e) {
     const { name, value } = e.target;
