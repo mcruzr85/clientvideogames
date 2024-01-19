@@ -29,7 +29,7 @@ const CardsContainer = () => {
       };
       serverConection();
     }
-  }, [dispatch, videogames.length]);
+  }, [dispatch, videogames]);
 
   //get Current videogames
   const indexOfLastVideogame = currentPage * postPerPage;
